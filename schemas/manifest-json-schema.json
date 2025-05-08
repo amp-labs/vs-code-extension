@@ -359,13 +359,8 @@
                       "description": "Configuration for how data is delivered to the destination."
                     }
                   },
-                  "description": "Configuration for reading data from a specific object."
-                },
-                "title": "Read Objects",
-                "description": "List of objects to read from the provider. Each object represents a data type like contacts, leads, etc.",
-                "minItems": 1,
-                "examples": [
-                  [
+                  "description": "Configuration for reading data from a specific object.",
+                  "examples": [
                     {
                       "objectName": "contact",
                       "destination": "defaultWebhook",
@@ -373,12 +368,32 @@
                       "requiredFields": [
                         {
                           "fieldName": "FirstName"
-                        },
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "title": "Read Objects",
+                "description": "List of objects to read from the provider. Each object represents a data type like contacts, leads, etc.",
+                "examples": [
+                  [
+                    {
+                      "objects": [
                         {
-                          "fieldName": "LastName"
-                        },
-                        {
-                          "fieldName": "Email"
+                          "objectName": "contact",
+                          "destination": "defaultWebhook",
+                          "schedule": "*/30 * * * *",
+                          "requiredFields": [
+                            {
+                              "fieldName": "FirstName"
+                            },
+                            {
+                              "fieldName": "LastName"
+                            },
+                            {
+                              "fieldName": "Email"
+                            }
+                          ]
                         }
                       ]
                     }
