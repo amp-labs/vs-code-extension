@@ -60,6 +60,10 @@
                                 "items": {
                                     "title": "Read Object",
                                     "description": "Configuration for reading data from a specific object.",
+                                    "required": [
+                                        "objectName",
+                                        "destination"
+                                    ],
                                     "properties": {
                                         "objectName": {
                                             "title": "Object Name",
