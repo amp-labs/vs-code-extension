@@ -378,22 +378,18 @@
                 "examples": [
                   [
                     {
-                      "objects": [
+                      "objectName": "contact",
+                      "destination": "defaultWebhook",
+                      "schedule": "*/30 * * * *",
+                      "requiredFields": [
                         {
-                          "objectName": "contact",
-                          "destination": "defaultWebhook",
-                          "schedule": "*/30 * * * *",
-                          "requiredFields": [
-                            {
-                              "fieldName": "FirstName"
-                            },
-                            {
-                              "fieldName": "LastName"
-                            },
-                            {
-                              "fieldName": "Email"
-                            }
-                          ]
+                          "fieldName": "FirstName"
+                        },
+                        {
+                          "fieldName": "LastName"
+                        },
+                        {
+                          "fieldName": "Email"
                         }
                       ]
                     }
