@@ -386,7 +386,27 @@
                 ]
               }
             },
-            "description": "Configuration for reading data from the provider."
+            "description": "Configuration for reading data from the provider.",
+            "examples": [
+              [
+                {
+                  "objectName": "contact",
+                  "destination": "defaultWebhook",
+                  "schedule": "*/30 * * * *",
+                  "requiredFields": [
+                    {
+                      "fieldName": "FirstName"
+                    },
+                    {
+                      "fieldName": "LastName"
+                    },
+                    {
+                      "fieldName": "Email"
+                    }
+                  ]
+                }
+              ]
+            ]
           },
           "write": {
             "title": "Write Configuration",
