@@ -682,41 +682,41 @@
                                         }
                                     ]
                                 ]
-                            },
-                            "examples": [
-                                [
-                                    {
-                                        "objects": [
-                                            {
-                                                "objectName": "contact",
-                                                "destination": "defaultWebhook",
-                                                "inheritFieldsAndMapping": true,
-                                                "createEvent": {
-                                                    "enabled": "always"
-                                                },
-                                                "updateEvent": {
-                                                    "enabled": "always",
-                                                    "watchFieldsAuto": "all",
-                                                    "requiredWatchFields": [
-                                                        "Name"
-                                                    ]
-                                                },
-                                                "deleteEvent": {
-                                                    "enabled": "always"
-                                                },
-                                                "associationChangeEvent": {
-                                                    "enabled": "always"
-                                                },
-                                                "otherEvents": [
-                                                    "object.merged",
-                                                    "object.restored"
+                            }
+                        },
+                        "examples": [
+                            [
+                                {
+                                    "objects": [
+                                        {
+                                            "objectName": "contact",
+                                            "destination": "defaultWebhook",
+                                            "inheritFieldsAndMapping": true,
+                                            "createEvent": {
+                                                "enabled": "always"
+                                            },
+                                            "updateEvent": {
+                                                "enabled": "always",
+                                                "watchFieldsAuto": "all",
+                                                "requiredWatchFields": [
+                                                    "Name"
                                                 ]
-                                            }
-                                        ]
-                                    }
-                                ]
+                                            },
+                                            "deleteEvent": {
+                                                "enabled": "always"
+                                            },
+                                            "associationChangeEvent": {
+                                                "enabled": "always"
+                                            },
+                                            "otherEvents": [
+                                                "object.merged",
+                                                "object.restored"
+                                            ]
+                                        }
+                                    ]
+                                }
                             ]
-                        }
+                        ]
                     },
                     "proxy": {
                         "title": "Proxy Configuration",
