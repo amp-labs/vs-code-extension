@@ -1,7 +1,7 @@
 {
-  "title": "Integration Manifest",
+  "title": "Ampersand Manifest Schema",
   "type": "object",
-  "description": "Schema for defining Ampersand integrations in amp.yaml files. Used to configure data synchronization and integration between various SaaS platforms.",
+  "description": "Schema for defining Ampersand integrations in amp.yaml files.",
   "required": [
     "specVersion",
     "integrations"
@@ -28,13 +28,36 @@
         ],
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "A unique identifier for this integration. Used in logs and as a reference. Use lowercase alphanumeric characters, hyphens and underscores only.",
+            "pattern": "^[a-z0-9_-]+$",
+            "maxLength": 64,
+            "examples": [
+              "salesforce-contacts",
+              "hubspot-integration",
+              "github-issues-tracker"
+            ]
           },
           "displayName": {
-            "type": "string"
+            "type": "string",
+            "description": "A human-readable name for this integration. This name is displayed in the UI and logs. Use proper capitalization for better readability.",
+            "maxLength": 100,
+            "examples": [
+              "Salesforce Contacts",
+              "HubSpot CRM Integration",
+              "GitHub Issues Tracker"
+            ]
           },
           "provider": {
-            "type": "string"
+            "type": "string",
+            "description": "The provider/platform for this integration. Must be one of the supported providers. This determines which API endpoints and authentication methods are used.",
+            "examples": [
+              "salesforce",
+              "hubspot",
+              "github",
+              "intercom",
+              "stripe"
+            ]
           },
           "read": {
             "title": "Read Integration",
@@ -52,21 +75,52 @@
                   ],
                   "properties": {
                     "objectName": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "The name of the object to read in the provider's API (e.g., 'contact', 'lead', 'account'). Must match an object type supported by the provider.",
+                      "examples": [
+                        "contact",
+                        "lead",
+                        "account",
+                        "opportunity"
+                      ]
                     },
                     "destination": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "The webhook destination for the read data. This determines where the data will be sent after it's read. Must match a webhook configured in your Ampersand account.",
+                      "examples": [
+                        "salesforceWebhook",
+                        "defaultWebhook",
+                        "customWebhook"
+                      ]
                     },
                     "schedule": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "A cron schedule for reading the data. Defines how frequently the data should be read. Uses standard cron syntax with five fields (minutes, hours, day of month, month, day of week).",
+                      "pattern": "^(\\*|[0-5]?[0-9]|\\*/[0-9]+)\\s+(\\*|[01]?[0-9]|2[0-3]|\\*/[0-9]+)\\s+(\\*|[0-2]?[0-9]|3[01]|\\*/[0-9]+)\\s+(\\*|[0]?[0-9]|1[0-2]|\\*/[0-9]+)\\s+(\\*|[0-6]|\\*/[0-9]+)$",
+                      "examples": [
+                        "*/10 * * * *",
+                        "*/30 * * * *",
+                        "0 * * * *",
+                        "0 0 * * *"
+                      ]
                     },
                     "mapToName": {
                       "type": "string",
-                      "description": "An object name to map to."
+                      "description": "An optional name mapping for this object. Used to standardize object names across different providers in your data model.",
+                      "examples": [
+                        "customer",
+                        "prospect",
+                        "company"
+                      ]
                     },
                     "mapToDisplayName": {
                       "type": "string",
-                      "description": "A display name to map to."
+                      "description": "An optional display name mapping for this object. Used for UI display and documentation.",
+                      "examples": [
+                        "Customer",
+                        "Sales Prospect",
+                        "Company"
+                      ]
                     },
                     "requiredFields": {
                       "type": "array",
@@ -74,48 +128,67 @@
                         "title": "Integration Field",
                         "oneOf": [
                           {
-                            "title": "Integration Field Existent",
-                            "type": "object",
-                            "required": [
-                              "fieldName"
-                            ],
                             "properties": {
                               "fieldName": {
-                                "type": "string"
+                                "description": "The name of the field in the provider's API. Must match a field available in the provider's API for the specified object.",
+                                "examples": [
+                                  "FirstName",
+                                  "LastName",
+                                  "Email",
+                                  "Phone"
+                                ]
                               },
                               "mapToName": {
-                                "type": "string",
-                                "description": "The field name to map to."
+                                "description": "An optional name mapping for this field. Used to standardize field names across different providers in your data model.",
+                                "examples": [
+                                  "first_name",
+                                  "last_name",
+                                  "email_address"
+                                ]
                               },
                               "mapToDisplayName": {
-                                "type": "string",
-                                "description": "The display name to map to."
+                                "description": "An optional display name mapping for this field. Used for UI display and documentation.",
+                                "examples": [
+                                  "First Name",
+                                  "Last Name",
+                                  "Email Address"
+                                ]
                               }
                             }
                           },
                           {
-                            "title": "Integration Field Mapping",
-                            "type": "object",
-                            "required": [
-                              "mapToName"
-                            ],
                             "properties": {
                               "mapToName": {
-                                "type": "string"
+                                "description": "The field name to map to.",
+                                "examples": [
+                                  "first_name",
+                                  "last_name",
+                                  "email_address"
+                                ]
                               },
                               "mapToDisplayName": {
-                                "type": "string"
+                                "description": "The display name to map to.",
+                                "examples": [
+                                  "First Name",
+                                  "Last Name",
+                                  "Email Address"
+                                ]
                               },
                               "default": {
-                                "type": "string"
+                                "description": "An optional default field name to suggest when prompting users."
                               },
                               "prompt": {
-                                "type": "string"
+                                "description": "A prompt to show when configuring this field. Helps users understand what the field is for or to select the appropriate field.",
+                                "examples": [
+                                  "Which field do you use to track the priority of a lead?",
+                                  "Select the field you use for tracking LinkedIn profiles"
+                                ]
                               }
                             }
                           }
                         ]
-                      }
+                      },
+                      "description": "Fields that are required for synchronization. These fields will always be included in the data."
                     },
                     "optionalFields": {
                       "type": "array",
@@ -123,55 +196,75 @@
                         "title": "Integration Field",
                         "oneOf": [
                           {
-                            "title": "Integration Field Existent",
-                            "type": "object",
-                            "required": [
-                              "fieldName"
-                            ],
                             "properties": {
                               "fieldName": {
-                                "type": "string"
+                                "description": "The name of the field in the provider's API. Must match a field available in the provider's API for the specified object.",
+                                "examples": [
+                                  "FirstName",
+                                  "LastName",
+                                  "Email",
+                                  "Phone"
+                                ]
                               },
                               "mapToName": {
-                                "type": "string",
-                                "description": "The field name to map to."
+                                "description": "An optional name mapping for this field. Used to standardize field names across different providers in your data model.",
+                                "examples": [
+                                  "first_name",
+                                  "last_name",
+                                  "email_address"
+                                ]
                               },
                               "mapToDisplayName": {
-                                "type": "string",
-                                "description": "The display name to map to."
+                                "description": "An optional display name mapping for this field. Used for UI display and documentation.",
+                                "examples": [
+                                  "First Name",
+                                  "Last Name",
+                                  "Email Address"
+                                ]
                               }
                             }
                           },
                           {
-                            "title": "Integration Field Mapping",
-                            "type": "object",
-                            "required": [
-                              "mapToName"
-                            ],
                             "properties": {
                               "mapToName": {
-                                "type": "string"
+                                "description": "The field name to map to.",
+                                "examples": [
+                                  "first_name",
+                                  "last_name",
+                                  "email_address"
+                                ]
                               },
                               "mapToDisplayName": {
-                                "type": "string"
+                                "description": "The display name to map to.",
+                                "examples": [
+                                  "First Name",
+                                  "Last Name",
+                                  "Email Address"
+                                ]
                               },
                               "default": {
-                                "type": "string"
+                                "description": "An optional default field name to suggest when prompting users."
                               },
                               "prompt": {
-                                "type": "string"
+                                "description": "A prompt to show when configuring this field. Helps users understand what the field is for or to select the appropriate field.",
+                                "examples": [
+                                  "Which field do you use to track the priority of a lead?",
+                                  "Select the field you use for tracking LinkedIn profiles"
+                                ]
                               }
                             }
                           }
                         ]
-                      }
+                      },
+                      "description": "Fields that are optional for synchronization. These fields will be included if available."
                     },
                     "optionalFieldsAuto": {
                       "title": "Optional Fields Auto Option",
                       "type": "string",
                       "enum": [
                         "all"
-                      ]
+                      ],
+                      "description": "Whether to automatically include all available fields. 'all' includes all fields."
                     },
                     "backfill": {
                       "title": "Backfill",
@@ -186,16 +279,27 @@
                           "properties": {
                             "days": {
                               "type": "integer",
-                              "description": "Number of days in past to backfill from. 0 is no backfill. e.g) if 10, then backfill last 10 days of data. Required if fullHistory is not set.",
-                              "minimum": 0
+                              "description": "Number of days in past to backfill from. 0 is no backfill. e.g) if 10, then backfill last 10 days of data.",
+                              "minimum": 0,
+                              "examples": [
+                                30,
+                                60,
+                                90
+                              ]
                             },
                             "fullHistory": {
                               "type": "boolean",
-                              "description": "If true, backfill all history. Required if days is not set."
+                              "description": "Whether to backfill the full history (true) or just recent data (false). Full history may take longer for large datasets.",
+                              "examples": [
+                                true,
+                                false
+                              ]
                             }
-                          }
+                          },
+                          "description": "The default time period for backfilling."
                         }
-                      }
+                      },
+                      "description": "Configuration for backfilling historical data. Defines how historical data should be loaded during initial sync."
                     },
                     "delivery": {
                       "title": "Delivery",
@@ -205,10 +309,14 @@
                           "type": "string",
                           "default": "auto",
                           "enum": [
-                            "onRequest",
-                            "auto"
+                            "auto",
+                            "onRequest"
                           ],
-                          "description": "The data delivery mode for this object. If not specified, defaults to automatic."
+                          "description": "The delivery mode. 'auto' delivers data as soon as it's read, 'onRequest' stores data until explicitly requested.",
+                          "examples": [
+                            "auto",
+                            "onRequest"
+                          ]
                         },
                         "pageSize": {
                           "type": "integer",
@@ -216,12 +324,15 @@
                           "minimum": 50,
                           "maximum": 500
                         }
-                      }
+                      },
+                      "description": "Configuration for how data is delivered to the destination."
                     }
                   }
-                }
+                },
+                "description": "List of objects to read from the provider. Each object represents a data type like contacts, leads, etc."
               }
-            }
+            },
+            "description": "Configuration for reading data from the provider."
           },
           "write": {
             "title": "Write Integration",
@@ -237,11 +348,22 @@
                   ],
                   "properties": {
                     "objectName": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "The name of the object to write to in the provider's API. Must match an object type that can be written to in the provider's API.",
+                      "examples": [
+                        "contact",
+                        "lead",
+                        "account",
+                        "opportunity"
+                      ]
                     },
                     "inheritMapping": {
                       "type": "boolean",
-                      "description": "If true, the write object will inherit the mapping from the read object. If false, the write object will have no mapping."
+                      "description": "Whether to inherit mappings from read configuration. If true, field mappings defined in the read configuration will be used for writing, which simplifies configuration for bidirectional syncs.",
+                      "examples": [
+                        true,
+                        false
+                      ]
                     },
                     "valueDefaults": {
                       "title": "Value Defaults",
@@ -250,23 +372,36 @@
                       "properties": {
                         "allowAnyFields": {
                           "type": "boolean",
-                          "description": "If true, users can set default values for any field."
+                          "description": "If true, users can set default values for any field through the Ampersand UI. Default: false.",
+                          "examples": [
+                            true,
+                            false
+                          ]
                         }
                       }
                     }
                   }
-                }
+                },
+                "description": "List of objects that can be written to. Each object represents a data type that can be created or updated."
               }
-            }
+            },
+            "description": "Configuration for writing data to the provider."
           },
           "proxy": {
             "title": "Proxy Integration",
             "type": "object",
             "properties": {
               "enabled": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Whether proxy is enabled for this integration. If true, API calls can be made directly to the provider through Ampersand's proxy.",
+                "default": false,
+                "examples": [
+                  true,
+                  false
+                ]
               }
-            }
+            },
+            "description": "Configuration for proxying API calls to the provider."
           },
           "subscribe": {
             "title": "Subscribe Integration",
@@ -283,41 +418,67 @@
                   ],
                   "properties": {
                     "objectName": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "The name of the object to subscribe to in the provider's API. Must match an object type supported by the provider.",
+                      "examples": [
+                        "account",
+                        "contact",
+                        "lead",
+                        "opportunity"
+                      ]
                     },
                     "destination": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "The webhook destination for the event data. This determines where the event data will be sent when an event occurs.",
+                      "examples": [
+                        "accountWebhook",
+                        "contactWebhook",
+                        "defaultWebhook"
+                      ]
                     },
                     "inheritFieldsAndMapping": {
                       "type": "boolean",
-                      "description": "If true, the integration will inherit the fields and mapping from the read object."
+                      "description": "Whether to inherit field mappings from read configuration. For Salesforce, this must be set to true.",
+                      "examples": [
+                        true
+                      ]
                     },
                     "createEvent": {
                       "type": "object",
                       "properties": {
                         "enabled": {
                           "type": "string",
-                          "description": "If always, the integration will subscribe to create events.",
+                          "description": "Whether create events are enabled. 'always' means they are always enabled.",
                           "enum": [
+                            "always"
+                          ],
+                          "examples": [
                             "always"
                           ]
                         }
-                      }
+                      },
+                      "description": "Configuration for create events. Triggers when a new record is created."
                     },
                     "updateEvent": {
                       "type": "object",
                       "properties": {
                         "enabled": {
                           "type": "string",
-                          "description": "If always, the integration will subscribe to update events.",
+                          "description": "Whether update events are enabled. 'always' means they are always enabled.",
                           "enum": [
+                            "always"
+                          ],
+                          "examples": [
                             "always"
                           ]
                         },
                         "watchFieldsAuto": {
                           "type": "string",
-                          "description": "If all, the integration will watch all fields for updates.",
+                          "description": "Whether to automatically watch all fields for changes. 'all' watches all fields.",
                           "enum": [
+                            "all"
+                          ],
+                          "examples": [
                             "all"
                           ]
                         },
@@ -325,50 +486,73 @@
                           "type": "array",
                           "items": {
                             "type": "string",
-                            "description": "The fields that are required to be watched for updates."
-                          }
+                            "description": "Field name to watch for changes."
+                          },
+                          "description": "The fields that are required to be watched for updates."
                         }
-                      }
+                      },
+                      "description": "Configuration for update events. Triggers when an existing record is modified."
                     },
                     "deleteEvent": {
                       "type": "object",
                       "properties": {
                         "enabled": {
                           "type": "string",
-                          "description": "If always, the integration will subscribe to delete events.",
+                          "description": "Whether delete events are enabled. 'always' means they are always enabled.",
                           "enum": [
+                            "always"
+                          ],
+                          "examples": [
                             "always"
                           ]
                         }
-                      }
+                      },
+                      "description": "Configuration for delete events. Triggers when a record is removed."
                     },
                     "associationChangeEvent": {
                       "type": "object",
                       "properties": {
                         "enabled": {
                           "type": "string",
-                          "description": "If always, the integration will subscribe to association change events.",
+                          "description": "Whether association change events are enabled. 'always' means they are always enabled.",
                           "enum": [
+                            "always"
+                          ],
+                          "examples": [
                             "always"
                           ]
                         },
                         "includeFullRecords": {
                           "type": "boolean",
-                          "description": "If true, the integration will include full records in the event payload."
+                          "description": "If true, the integration will include full records in the event payload.",
+                          "examples": [
+                            true,
+                            false
+                          ]
                         }
-                      }
+                      },
+                      "description": "Configuration for association change events. Triggers when relationships between records change."
                     },
                     "otherEvents": {
                       "type": "array",
                       "items": {
                         "type": "string",
                         "description": "Non-standard events that the integration will subscribe to."
-                      }
+                      },
+                      "description": "Non-standard events that the integration will subscribe to.",
+                      "examples": [
+                        [
+                          "object.merged",
+                          "object.restored"
+                        ]
+                      ]
                     }
                   }
-                }
+                },
+                "description": "List of objects to subscribe to. Each object represents a specific data type to receive events for."
               }
-            }
+            },
+            "description": "Configuration for subscribing to events from the provider."
           }
         }
       },
@@ -405,410 +589,5 @@
       ]
     }
   },
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "definitions": {
-    "integration": {
-      "description": "Configuration for an integration with a specific provider like Salesforce, HubSpot, etc.",
-      "properties": {
-        "name": {
-          "description": "A unique identifier for this integration. Used in logs and as a reference. Use lowercase alphanumeric characters, hyphens and underscores only.",
-          "pattern": "^[a-z0-9_-]+$",
-          "maxLength": 64,
-          "examples": [
-            "salesforce-contacts",
-            "hubspot-integration",
-            "github-issues-tracker"
-          ]
-        },
-        "displayName": {
-          "description": "A human-readable name for this integration. This name is displayed in the UI and logs. Use proper capitalization for better readability.",
-          "maxLength": 100,
-          "examples": [
-            "Salesforce Contacts",
-            "HubSpot CRM Integration",
-            "GitHub Issues Tracker"
-          ]
-        },
-        "provider": {
-          "description": "The provider/platform for this integration. Must be one of the supported providers. This determines which API endpoints and authentication methods are used.",
-          "examples": [
-            "salesforce",
-            "hubspot",
-            "github",
-            "intercom",
-            "stripe"
-          ]
-        },
-        "read": {
-          "description": "Configuration for reading data from the provider."
-        },
-        "write": {
-          "description": "Configuration for writing data to the provider."
-        },
-        "subscribe": {
-          "description": "Configuration for subscribing to events from the provider."
-        },
-        "proxy": {
-          "description": "Configuration for proxying API calls to the provider."
-        }
-      }
-    },
-    "read": {
-      "description": "Configuration for reading data from the provider. Defines what data to read, how frequently, and where to send it.",
-      "properties": {
-        "objects": {
-          "description": "List of objects to read from the provider. Each object represents a data type like contacts, leads, etc.",
-          "examples": [
-            [
-              {
-                "objectName": "contact",
-                "destination": "webhookName",
-                "schedule": "*/30 * * * *",
-                "requiredFields": [
-                  {
-                    "fieldName": "FirstName"
-                  },
-                  {
-                    "fieldName": "LastName"
-                  }
-                ]
-              }
-            ]
-          ]
-        }
-      }
-    },
-    "readObject": {
-      "description": "Configuration for a specific object to read. Defines which fields to read and how to handle the data.",
-      "properties": {
-        "objectName": {
-          "description": "The name of the object to read in the provider's API (e.g., 'contact', 'lead', 'account'). Must match an object type supported by the provider.",
-          "examples": [
-            "contact",
-            "lead",
-            "account",
-            "opportunity"
-          ]
-        },
-        "destination": {
-          "description": "The webhook destination for the read data. This determines where the data will be sent after it's read. Must match a webhook configured in your Ampersand account.",
-          "examples": [
-            "salesforceWebhook",
-            "defaultWebhook",
-            "customWebhook"
-          ]
-        },
-        "schedule": {
-          "description": "A cron schedule for reading the data. Defines how frequently the data should be read. Uses standard cron syntax with five fields (minutes, hours, day of month, month, day of week).",
-          "pattern": "^(\\*|[0-5]?[0-9]|\\*/[0-9]+)\\s+(\\*|[01]?[0-9]|2[0-3]|\\*/[0-9]+)\\s+(\\*|[0-2]?[0-9]|3[01]|\\*/[0-9]+)\\s+(\\*|[0]?[0-9]|1[0-2]|\\*/[0-9]+)\\s+(\\*|[0-6]|\\*/[0-9]+)$",
-          "examples": [
-            "*/10 * * * *",
-            "*/30 * * * *",
-            "0 * * * *",
-            "0 0 * * *"
-          ]
-        },
-        "mapToName": {
-          "description": "An optional name mapping for this object. Used to standardize object names across different providers in your data model.",
-          "examples": [
-            "customer",
-            "prospect",
-            "company"
-          ]
-        },
-        "mapToDisplayName": {
-          "description": "An optional display name mapping for this object. Used for UI display and documentation.",
-          "examples": [
-            "Customer",
-            "Sales Prospect",
-            "Company"
-          ]
-        },
-        "backfill": {
-          "description": "Configuration for backfilling historical data. Defines how historical data should be loaded during initial sync.",
-          "properties": {
-            "defaultPeriod": {
-              "description": "The default time period for backfilling.",
-              "properties": {
-                "fullHistory": {
-                  "description": "Whether to backfill the full history (true) or just recent data (false). Full history may take longer for large datasets.",
-                  "examples": [
-                    true,
-                    false
-                  ]
-                },
-                "days": {
-                  "description": "Number of days in past to backfill from. 0 is no backfill. e.g) if 10, then backfill last 10 days of data.",
-                  "minimum": 0,
-                  "examples": [
-                    30,
-                    60,
-                    90
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "delivery": {
-          "description": "Configuration for how data is delivered to the destination.",
-          "properties": {
-            "mode": {
-              "description": "The delivery mode. 'auto' delivers data as soon as it's read, 'onRequest' stores data until explicitly requested.",
-              "enum": [
-                "auto",
-                "onRequest"
-              ],
-              "default": "auto",
-              "examples": [
-                "auto",
-                "onRequest"
-              ]
-            }
-          }
-        }
-      }
-    },
-    "field": {
-      "description": "Configuration for a field to read or write. Fields can be specified by simple name or with mappings and prompts.",
-      "properties": {
-        "fieldName": {
-          "description": "The name of the field in the provider's API. Must match a field available in the provider's API for the specified object.",
-          "examples": [
-            "FirstName",
-            "LastName",
-            "Email",
-            "Phone"
-          ]
-        },
-        "mapToName": {
-          "description": "An optional name mapping for this field. Used to standardize field names across different providers in your data model.",
-          "examples": [
-            "first_name",
-            "last_name",
-            "email_address"
-          ]
-        },
-        "mapToDisplayName": {
-          "description": "An optional display name mapping for this field. Used for UI display and documentation.",
-          "examples": [
-            "First Name",
-            "Last Name",
-            "Email Address"
-          ]
-        },
-        "prompt": {
-          "description": "A prompt to show when configuring this field. Helps users understand what the field is for or to select the appropriate field.",
-          "examples": [
-            "Which field do you use to track the priority of a lead?",
-            "Select the field you use for tracking LinkedIn profiles"
-          ]
-        },
-        "default": {
-          "description": "An optional default field name to suggest when prompting users. Should only use standard fields as defaults."
-        }
-      }
-    },
-    "write": {
-      "description": "Configuration for writing data to the provider. Defines what objects can be written to.",
-      "properties": {
-        "objects": {
-          "description": "List of objects that can be written to. Each object represents a data type that can be created or updated.",
-          "examples": [
-            [
-              {
-                "objectName": "contact",
-                "inheritMapping": true
-              },
-              {
-                "objectName": "lead"
-              }
-            ]
-          ]
-        }
-      }
-    },
-    "writeObject": {
-      "description": "Configuration for a specific object to write to. Defines what data can be written to this object type.",
-      "properties": {
-        "objectName": {
-          "description": "The name of the object to write to in the provider's API. Must match an object type that can be written to in the provider's API.",
-          "examples": [
-            "contact",
-            "lead",
-            "account",
-            "opportunity"
-          ]
-        },
-        "inheritMapping": {
-          "description": "Whether to inherit mappings from read configuration. If true, field mappings defined in the read configuration will be used for writing, which simplifies configuration for bidirectional syncs.",
-          "examples": [
-            true,
-            false
-          ]
-        },
-        "valueDefaults": {
-          "description": "Configuration to set default write values for object fields.",
-          "properties": {
-            "allowAnyFields": {
-              "description": "If true, users can set default values for any field through the Ampersand UI. Default: false.",
-              "examples": [
-                true,
-                false
-              ]
-            }
-          }
-        }
-      }
-    },
-    "subscribe": {
-      "description": "Configuration for subscribing to events from the provider. Defines what objects to subscribe to for events.",
-      "properties": {
-        "objects": {
-          "description": "List of objects to subscribe to. Each object represents a specific data type to receive events for.",
-          "examples": [
-            [
-              {
-                "objectName": "account",
-                "destination": "accountWebhook",
-                "inheritFieldsAndMapping": true,
-                "createEvent": {
-                  "enabled": "always"
-                },
-                "updateEvent": {
-                  "enabled": "always",
-                  "watchFieldsAuto": "all"
-                },
-                "deleteEvent": {
-                  "enabled": "always"
-                }
-              }
-            ]
-          ]
-        }
-      }
-    },
-    "subscribeObject": {
-      "description": "Configuration for a specific object to subscribe to. Defines what events to listen for on this object.",
-      "properties": {
-        "objectName": {
-          "description": "The name of the object to subscribe to in the provider's API. Must match an object type supported by the provider.",
-          "examples": [
-            "account",
-            "contact",
-            "lead",
-            "opportunity"
-          ]
-        },
-        "destination": {
-          "description": "The webhook destination for the event data. This determines where the event data will be sent when an event occurs.",
-          "examples": [
-            "accountWebhook",
-            "contactWebhook",
-            "defaultWebhook"
-          ]
-        },
-        "inheritFieldsAndMapping": {
-          "description": "Whether to inherit field mappings from read configuration. For Salesforce, this must be set to true.",
-          "examples": [
-            true
-          ]
-        },
-        "createEvent": {
-          "description": "Configuration for create events. Triggers when a new record is created.",
-          "properties": {
-            "enabled": {
-              "description": "Whether create events are enabled. 'always' means they are always enabled.",
-              "enum": [
-                "always"
-              ],
-              "examples": [
-                "always"
-              ]
-            }
-          }
-        },
-        "updateEvent": {
-          "description": "Configuration for update events. Triggers when an existing record is modified.",
-          "properties": {
-            "enabled": {
-              "description": "Whether update events are enabled. 'always' means they are always enabled.",
-              "enum": [
-                "always"
-              ],
-              "examples": [
-                "always"
-              ]
-            },
-            "watchFieldsAuto": {
-              "description": "Whether to automatically watch all fields for changes. 'all' watches all fields.",
-              "enum": [
-                "all"
-              ],
-              "examples": [
-                "all"
-              ]
-            }
-          }
-        },
-        "deleteEvent": {
-          "description": "Configuration for delete events. Triggers when a record is removed.",
-          "properties": {
-            "enabled": {
-              "description": "Whether delete events are enabled. 'always' means they are always enabled.",
-              "enum": [
-                "always"
-              ],
-              "examples": [
-                "always"
-              ]
-            }
-          }
-        },
-        "associationChangeEvent": {
-          "description": "Configuration for association change events. Triggers when relationships between records change.",
-          "properties": {
-            "enabled": {
-              "description": "Whether association change events are enabled. 'always' means they are always enabled.",
-              "enum": [
-                "always"
-              ],
-              "examples": [
-                "always"
-              ]
-            },
-            "includeFullRecords": {
-              "description": "If true, the integration will include full records in the event payload.",
-              "examples": [
-                true,
-                false
-              ]
-            }
-          }
-        },
-        "otherEvents": {
-          "description": "Non-standard events that the integration will subscribe to.",
-          "examples": [
-            [
-              "object.merged",
-              "object.restored"
-            ]
-          ]
-        }
-      }
-    },
-    "proxy": {
-      "description": "Configuration for proxying API calls to the provider. Enables direct access to the provider's API.",
-      "properties": {
-        "enabled": {
-          "description": "Whether proxy is enabled for this integration. If true, API calls can be made directly to the provider through Ampersand's proxy.",
-          "default": false,
-          "examples": [
-            true,
-            false
-          ]
-        }
-      }
-    }
-  }
+  "$schema": "http://json-schema.org/draft-04/schema#"
 }
