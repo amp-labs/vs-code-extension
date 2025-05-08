@@ -3,6 +3,7 @@
     "description": "Schema for defining Ampersand integrations in amp.yaml files.",
     "properties": {
         "specVersion": {
+            "title": "Spec Version",
             "description": "The version of the manifest specification. Currently only 1.0.0 is supported. Future versions may introduce breaking changes.",
             "enum": [
                 "1.0.0"
@@ -12,6 +13,7 @@
             ]
         },
         "integrations": {
+            "title": "Integrations",
             "description": "An array of integration configurations. Each integration defines connectivity with a specific provider (e.g., Salesforce, HubSpot, GitHub).",
             "minItems": 1,
             "examples": [
@@ -46,6 +48,7 @@
             "items": {
                 "properties": {
                     "name": {
+                        "title": "Name",
                         "description": "A unique identifier for this integration. Used in logs and as a reference. Use lowercase alphanumeric characters, hyphens and underscores only.",
                         "pattern": "^[a-z0-9_-]+$",
                         "maxLength": 64,
@@ -56,6 +59,7 @@
                         ]
                     },
                     "displayName": {
+                        "title": "Display Name",
                         "description": "A human-readable name for this integration. This name is displayed in the UI and logs. Use proper capitalization for better readability.",
                         "maxLength": 100,
                         "examples": [
@@ -65,6 +69,7 @@
                         ]
                     },
                     "provider": {
+                        "title": "Provider",
                         "description": "The provider/platform for this integration. Must be one of the supported providers. This determines which API endpoints and authentication methods are used.",
                         "examples": [
                             "salesforce",
@@ -75,10 +80,36 @@
                         ]
                     },
                     "read": {
+                        "title": "Read Configuration",
                         "description": "Configuration for reading data from the provider.",
+                        "required": [
+                            "objects"
+                        ],
                         "properties": {
                             "objects": {
+                                "title": "Read Objects",
                                 "description": "List of objects to read from the provider. Each object represents a data type like contacts, leads, etc.",
+                                "minItems": 1,
+                                "examples": [
+                                    [
+                                        {
+                                            "objectName": "contact",
+                                            "destination": "defaultWebhook",
+                                            "schedule": "*/30 * * * *",
+                                            "requiredFields": [
+                                                {
+                                                    "fieldName": "FirstName"
+                                                },
+                                                {
+                                                    "fieldName": "LastName"
+                                                },
+                                                {
+                                                    "fieldName": "Email"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                ],
                                 "items": {
                                     "properties": {
                                         "objectName": {
