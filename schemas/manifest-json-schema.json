@@ -358,19 +358,7 @@
                       "description": "Configuration for how data is delivered to the destination."
                     }
                   },
-                  "description": "Configuration for reading data from a specific object.",
-                  "examples": [
-                    {
-                      "objectName": "contact",
-                      "destination": "defaultWebhook",
-                      "schedule": "*/30 * * * *",
-                      "requiredFields": [
-                        {
-                          "fieldName": "FirstName"
-                        }
-                      ]
-                    }
-                  ]
+                  "description": "Configuration for reading data from a specific object."
                 },
                 "title": "Read Objects",
                 "description": "List of objects to read from the provider. Each object represents a data type like contacts, leads, etc.",
@@ -380,6 +368,16 @@
                       "objectName": "contact",
                       "destination": "defaultWebhook",
                       "schedule": "*/30 * * * *",
+                      "backfill": {
+                        "defaultPeriod": {
+                          "fullHistory": true,
+                          "days": 30
+                        }
+                      },
+                      "delivery": {
+                        "mode": "auto",
+                        "pageSize": 100
+                      },
                       "requiredFields": [
                         {
                           "fieldName": "FirstName"
@@ -390,7 +388,15 @@
                         {
                           "fieldName": "Email"
                         }
-                      ]
+                      ],
+                      "optionalFields": [
+                        {
+                          "fieldName": "Phone"
+                        }
+                      ],
+                      "optionalFieldsAuto": "all",
+                      "mapToName": "customer",
+                      "mapToDisplayName": "Customer"
                     }
                   ]
                 ]

@@ -95,23 +95,60 @@
                                                 "0 0 * * *"
                                             ]
                                         },
-                                        "mapToName": {
-                                            "title": "Map To Name",
-                                            "description": "An optional name mapping for this object. Used to standardize object names across different providers in your data model.",
-                                            "examples": [
-                                                "customer",
-                                                "prospect",
-                                                "company"
-                                            ]
+                                        "backfill": {
+                                            "title": "Backfill",
+                                            "description": "Configuration for backfilling historical data. Defines how historical data should be loaded during initial sync.",
+                                            "properties": {
+                                                "defaultPeriod": {
+                                                    "title": "Default Period",
+                                                    "description": "The default time period for backfilling.",
+                                                    "properties": {
+                                                        "fullHistory": {
+                                                            "title": "Full History",
+                                                            "description": "Whether to backfill the full history (true) or just recent data (false). Full history may take longer for large datasets.",
+                                                            "examples": [
+                                                                true,
+                                                                false
+                                                            ]
+                                                        },
+                                                        "days": {
+                                                            "title": "Days",
+                                                            "description": "Number of days in past to backfill from. 0 is no backfill. e.g) if 10, then backfill last 10 days of data.",
+                                                            "minimum": 0,
+                                                            "examples": [
+                                                                30,
+                                                                60,
+                                                                90
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
-                                        "mapToDisplayName": {
-                                            "title": "Map To Display Name",
-                                            "description": "An optional display name mapping for this object. Used for UI display and documentation.",
-                                            "examples": [
-                                                "Customer",
-                                                "Sales Prospect",
-                                                "Company"
-                                            ]
+                                        "delivery": {
+                                            "title": "Delivery",
+                                            "description": "Configuration for how data is delivered to the destination.",
+                                            "properties": {
+                                                "mode": {
+                                                    "title": "Mode",
+                                                    "description": "The delivery mode. 'auto' delivers data as soon as it's read, 'onRequest' stores data until explicitly requested.",
+                                                    "enum": [
+                                                        "auto",
+                                                        "onRequest"
+                                                    ],
+                                                    "default": "auto",
+                                                    "examples": [
+                                                        "auto",
+                                                        "onRequest"
+                                                    ]
+                                                },
+                                                "pageSize": {
+                                                    "title": "Page Size",
+                                                    "description": "The number of records to receive per data delivery.",
+                                                    "minimum": 50,
+                                                    "maximum": 500
+                                                }
+                                            }
                                         },
                                         "requiredFields": {
                                             "title": "Required Fields",
@@ -269,74 +306,25 @@
                                             "title": "Optional Fields Auto",
                                             "description": "Whether to automatically include all available fields. 'all' includes all fields."
                                         },
-                                        "backfill": {
-                                            "title": "Backfill",
-                                            "description": "Configuration for backfilling historical data. Defines how historical data should be loaded during initial sync.",
-                                            "properties": {
-                                                "defaultPeriod": {
-                                                    "title": "Default Period",
-                                                    "description": "The default time period for backfilling.",
-                                                    "properties": {
-                                                        "fullHistory": {
-                                                            "title": "Full History",
-                                                            "description": "Whether to backfill the full history (true) or just recent data (false). Full history may take longer for large datasets.",
-                                                            "examples": [
-                                                                true,
-                                                                false
-                                                            ]
-                                                        },
-                                                        "days": {
-                                                            "title": "Days",
-                                                            "description": "Number of days in past to backfill from. 0 is no backfill. e.g) if 10, then backfill last 10 days of data.",
-                                                            "minimum": 0,
-                                                            "examples": [
-                                                                30,
-                                                                60,
-                                                                90
-                                                            ]
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                        "mapToName": {
+                                            "title": "Map To Name",
+                                            "description": "An optional name mapping for this object. Used to standardize object names across different providers in your data model.",
+                                            "examples": [
+                                                "customer",
+                                                "prospect",
+                                                "company"
+                                            ]
                                         },
-                                        "delivery": {
-                                            "title": "Delivery",
-                                            "description": "Configuration for how data is delivered to the destination.",
-                                            "properties": {
-                                                "mode": {
-                                                    "title": "Mode",
-                                                    "description": "The delivery mode. 'auto' delivers data as soon as it's read, 'onRequest' stores data until explicitly requested.",
-                                                    "enum": [
-                                                        "auto",
-                                                        "onRequest"
-                                                    ],
-                                                    "default": "auto",
-                                                    "examples": [
-                                                        "auto",
-                                                        "onRequest"
-                                                    ]
-                                                },
-                                                "pageSize": {
-                                                    "title": "Page Size",
-                                                    "description": "The number of records to receive per data delivery.",
-                                                    "minimum": 50,
-                                                    "maximum": 500
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "examples": [
-                                        {
-                                            "objectName": "contact",
-                                            "destination": "defaultWebhook",
-                                            "schedule": "*/30 * * * *",
-                                            "requiredFields": [
-                                                {
-                                                    "fieldName": "FirstName"
-                                                }
+                                        "mapToDisplayName": {
+                                            "title": "Map To Display Name",
+                                            "description": "An optional display name mapping for this object. Used for UI display and documentation.",
+                                            "examples": [
+                                                "Customer",
+                                                "Sales Prospect",
+                                                "Company"
                                             ]
                                         }
-                                    ]
+                                    }
                                 },
                                 "examples": [
                                     [
@@ -344,6 +332,16 @@
                                             "objectName": "contact",
                                             "destination": "defaultWebhook",
                                             "schedule": "*/30 * * * *",
+                                            "backfill": {
+                                                "defaultPeriod": {
+                                                    "fullHistory": true,
+                                                    "days": 30
+                                                }
+                                            },
+                                            "delivery": {
+                                                "mode": "auto",
+                                                "pageSize": 100
+                                            },
                                             "requiredFields": [
                                                 {
                                                     "fieldName": "FirstName"
@@ -354,7 +352,15 @@
                                                 {
                                                     "fieldName": "Email"
                                                 }
-                                            ]
+                                            ],
+                                            "optionalFields": [
+                                                {
+                                                    "fieldName": "Phone"
+                                                }
+                                            ],
+                                            "optionalFieldsAuto": "all",
+                                            "mapToName": "customer",
+                                            "mapToDisplayName": "Customer"
                                         }
                                     ]
                                 ]
