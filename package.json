@@ -1,0 +1,72 @@
+{
+  "name": "ampersand-schema-validator",
+  "displayName": "Ampersand Schema Validator",
+  "description": "Validation, completion and quick fixes for Ampersand manifest files (amp.yaml)",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Linters",
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:yaml"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "yamlValidation": [
+      {
+        "fileMatch": [
+          "amp.yaml",
+          "*.amp.yaml"
+        ],
+        "url": "https://raw.githubusercontent.com/caiopizzol/vs-code-extension/refs/heads/main/schemas/manifest-json-schema.json"
+      }
+    ],
+    "jsonValidation": [
+      {
+        "fileMatch": [
+          "amp.json",
+          "*.amp.json"
+        ],
+        "url": "https://raw.githubusercontent.com/caiopizzol/vs-code-extension/refs/heads/main/schemas/manifest-json-schema.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "ampersand-schema.generateTemplate",
+        "title": "Ampersand: Generate Sample Manifest"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "install-local": "vsce package && code --install-extension ampersand-schema-validator-*.vsix"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "js-yaml": "^4.1.0",
+    "pnpm": "^10.10.0"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/js-yaml": "^4.0.5",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "~22.15.16",
+    "@types/vscode": "^1.60.0",
+    "@typescript-eslint/eslint-plugin": "^8.32.0",
+    "@typescript-eslint/parser": "^8.32.0",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.26.0",
+    "glob": "^11.0.2",
+    "mocha": "^11.2.2",
+    "typescript": "^5.8.3"
+  }
+}

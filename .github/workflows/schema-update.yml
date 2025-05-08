@@ -1,0 +1,47 @@
+name: Update JSON Schema
+
+on:
+  repository_dispatch:
+    types: [update-json-schema]
+  workflow_dispatch:
+    # Allow manual triggering for testing
+
+jobs:
+  update-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log trigger event
+        run: echo "Schema update triggered by ${{ github.event_name }} event"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install schema dependencies
+        run: cd schemas && npm ci
+
+      - name: Fetch latest manifest.json from OpenAPI repo
+        run: |
+          curl -o schemas/manifest.json https://raw.githubusercontent.com/amp-labs/openapi/refs/heads/main/manifest/generated/manifest.json
+
+      - name: Build schema
+        run: cd schemas && npm run build
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.AMPERSAND_OPS_PAT }} || ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update manifest JSON schema"
+          title: "Update manifest JSON schema"
+          body: |
+            This PR updates the manifest JSON schema based on changes in the OpenAPI repository.
+
+            **Please review carefully to ensure these changes don't break the VS Code extension.**
+          branch: update-manifest-schema
+          base: "main"
+          delete-branch: true
