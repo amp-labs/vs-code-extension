@@ -146,24 +146,6 @@
                                   "Email",
                                   "Phone"
                                 ]
-                              },
-                              "mapToName": {
-                                "title": "Map To Name",
-                                "description": "An optional name mapping for this field. Used to standardize field names across different providers in your data model.",
-                                "examples": [
-                                  "first_name",
-                                  "last_name",
-                                  "email_address"
-                                ]
-                              },
-                              "mapToDisplayName": {
-                                "title": "Map To Display Name",
-                                "description": "An optional display name mapping for this field. Used for UI display and documentation.",
-                                "examples": [
-                                  "First Name",
-                                  "Last Name",
-                                  "Email Address"
-                                ]
                               }
                             }
                           },
@@ -205,7 +187,25 @@
                         "description": "Configuration for a required field."
                       },
                       "title": "Required Fields",
-                      "description": "Fields that are required for synchronization. These fields will always be included in the data."
+                      "description": "Fields that are required for synchronization. These fields will always be included in the data.",
+                      "examples": [
+                        [
+                          {
+                            "fieldName": "FirstName"
+                          },
+                          {
+                            "fieldName": "LastName",
+                            "mapToName": "last_name",
+                            "mapToDisplayName": "Last Name"
+                          },
+                          {
+                            "mapToName": "email",
+                            "mapToDisplayName": "Email",
+                            "default": "Email Address",
+                            "prompt": "Which field do you use to track the priority of a lead?"
+                          }
+                        ]
+                      ]
                     },
                     "optionalFields": {
                       "type": "array",
@@ -222,24 +222,6 @@
                                   "LastName",
                                   "Email",
                                   "Phone"
-                                ]
-                              },
-                              "mapToName": {
-                                "title": "Map To Name",
-                                "description": "An optional name mapping for this field. Used to standardize field names across different providers in your data model.",
-                                "examples": [
-                                  "first_name",
-                                  "last_name",
-                                  "email_address"
-                                ]
-                              },
-                              "mapToDisplayName": {
-                                "title": "Map To Display Name",
-                                "description": "An optional display name mapping for this field. Used for UI display and documentation.",
-                                "examples": [
-                                  "First Name",
-                                  "Last Name",
-                                  "Email Address"
                                 ]
                               }
                             }
@@ -282,7 +264,25 @@
                         "description": "Configuration for an optional field."
                       },
                       "title": "Optional Fields",
-                      "description": "Fields that are optional for synchronization. These fields will be included if available."
+                      "description": "Fields that are optional for synchronization. These fields will be included if available.",
+                      "examples": [
+                        [
+                          {
+                            "fieldName": "Phone"
+                          },
+                          {
+                            "fieldName": "Phone",
+                            "mapToName": "phone",
+                            "mapToDisplayName": "Phone"
+                          },
+                          {
+                            "mapToName": "phone",
+                            "mapToDisplayName": "Phone",
+                            "default": "Phone Number",
+                            "prompt": "Which field do you use to track the priority of a lead?"
+                          }
+                        ]
+                      ]
                     },
                     "optionalFieldsAuto": {
                       "title": "Optional Fields Auto",
@@ -290,7 +290,10 @@
                       "enum": [
                         "all"
                       ],
-                      "description": "Whether to automatically include all available fields. 'all' includes all fields."
+                      "description": "Whether to automatically include all available fields. 'all' includes all fields.",
+                      "examples": [
+                        "all"
+                      ]
                     },
                     "backfill": {
                       "title": "Backfill",
@@ -324,10 +327,24 @@
                               ]
                             }
                           },
-                          "description": "The default time period for backfilling."
+                          "description": "The default time period for backfilling.",
+                          "examples": [
+                            {
+                              "fullHistory": true,
+                              "days": 30
+                            }
+                          ]
                         }
                       },
-                      "description": "Configuration for backfilling historical data. Defines how historical data should be loaded during initial sync."
+                      "description": "Configuration for backfilling historical data. Defines how historical data should be loaded during initial sync.",
+                      "examples": [
+                        {
+                          "defaultPeriod": {
+                            "fullHistory": true,
+                            "days": 30
+                          }
+                        }
+                      ]
                     },
                     "delivery": {
                       "title": "Delivery",
@@ -352,10 +369,21 @@
                           "description": "The number of records to receive per data delivery.",
                           "minimum": 50,
                           "maximum": 500,
-                          "title": "Page Size"
+                          "title": "Page Size",
+                          "examples": [
+                            100,
+                            200,
+                            500
+                          ]
                         }
                       },
-                      "description": "Configuration for how data is delivered to the destination."
+                      "description": "Configuration for how data is delivered to the destination.",
+                      "examples": [
+                        {
+                          "mode": "auto",
+                          "pageSize": 100
+                        }
+                      ]
                     }
                   },
                   "description": "Configuration for reading data from a specific object."

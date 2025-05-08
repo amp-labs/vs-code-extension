@@ -121,9 +121,23 @@
                                                                 90
                                                             ]
                                                         }
+                                                    },
+                                                    "examples": [
+                                                        {
+                                                            "fullHistory": true,
+                                                            "days": 30
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "examples": [
+                                                {
+                                                    "defaultPeriod": {
+                                                        "fullHistory": true,
+                                                        "days": 30
                                                     }
                                                 }
-                                            }
+                                            ]
                                         },
                                         "delivery": {
                                             "title": "Delivery",
@@ -146,9 +160,20 @@
                                                     "title": "Page Size",
                                                     "description": "The number of records to receive per data delivery.",
                                                     "minimum": 50,
-                                                    "maximum": 500
+                                                    "maximum": 500,
+                                                    "examples": [
+                                                        100,
+                                                        200,
+                                                        500
+                                                    ]
                                                 }
-                                            }
+                                            },
+                                            "examples": [
+                                                {
+                                                    "mode": "auto",
+                                                    "pageSize": 100
+                                                }
+                                            ]
                                         },
                                         "requiredFields": {
                                             "title": "Required Fields",
@@ -168,24 +193,6 @@
                                                                     "Email",
                                                                     "Phone"
                                                                 ]
-                                                            },
-                                                            "mapToName": {
-                                                                "title": "Map To Name",
-                                                                "description": "An optional name mapping for this field. Used to standardize field names across different providers in your data model.",
-                                                                "examples": [
-                                                                    "first_name",
-                                                                    "last_name",
-                                                                    "email_address"
-                                                                ]
-                                                            },
-                                                            "mapToDisplayName": {
-                                                                "title": "Map To Display Name",
-                                                                "description": "An optional display name mapping for this field. Used for UI display and documentation.",
-                                                                "examples": [
-                                                                    "First Name",
-                                                                    "Last Name",
-                                                                    "Email Address"
-                                                                ]
                                                             }
                                                         }
                                                     },
@@ -224,7 +231,25 @@
                                                         }
                                                     }
                                                 ]
-                                            }
+                                            },
+                                            "examples": [
+                                                [
+                                                    {
+                                                        "fieldName": "FirstName"
+                                                    },
+                                                    {
+                                                        "fieldName": "LastName",
+                                                        "mapToName": "last_name",
+                                                        "mapToDisplayName": "Last Name"
+                                                    },
+                                                    {
+                                                        "mapToName": "email",
+                                                        "mapToDisplayName": "Email",
+                                                        "default": "Email Address",
+                                                        "prompt": "Which field do you use to track the priority of a lead?"
+                                                    }
+                                                ]
+                                            ]
                                         },
                                         "optionalFields": {
                                             "title": "Optional Fields",
@@ -244,24 +269,6 @@
                                                                     "Email",
                                                                     "Phone"
                                                                 ]
-                                                            },
-                                                            "mapToName": {
-                                                                "title": "Map To Name",
-                                                                "description": "An optional name mapping for this field. Used to standardize field names across different providers in your data model.",
-                                                                "examples": [
-                                                                    "first_name",
-                                                                    "last_name",
-                                                                    "email_address"
-                                                                ]
-                                                            },
-                                                            "mapToDisplayName": {
-                                                                "title": "Map To Display Name",
-                                                                "description": "An optional display name mapping for this field. Used for UI display and documentation.",
-                                                                "examples": [
-                                                                    "First Name",
-                                                                    "Last Name",
-                                                                    "Email Address"
-                                                                ]
                                                             }
                                                         }
                                                     },
@@ -300,11 +307,32 @@
                                                         }
                                                     }
                                                 ]
-                                            }
+                                            },
+                                            "examples": [
+                                                [
+                                                    {
+                                                        "fieldName": "Phone"
+                                                    },
+                                                    {
+                                                        "fieldName": "Phone",
+                                                        "mapToName": "phone",
+                                                        "mapToDisplayName": "Phone"
+                                                    },
+                                                    {
+                                                        "mapToName": "phone",
+                                                        "mapToDisplayName": "Phone",
+                                                        "default": "Phone Number",
+                                                        "prompt": "Which field do you use to track the priority of a lead?"
+                                                    }
+                                                ]
+                                            ]
                                         },
                                         "optionalFieldsAuto": {
                                             "title": "Optional Fields Auto",
-                                            "description": "Whether to automatically include all available fields. 'all' includes all fields."
+                                            "description": "Whether to automatically include all available fields. 'all' includes all fields.",
+                                            "examples": [
+                                                "all"
+                                            ]
                                         },
                                         "mapToName": {
                                             "title": "Map To Name",
