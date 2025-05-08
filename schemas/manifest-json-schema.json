@@ -386,10 +386,7 @@
                 ]
               }
             },
-            "description": "Configuration for reading data from the provider.",
-            "required": [
-              "objects"
-            ]
+            "description": "Configuration for reading data from the provider."
           },
           "write": {
             "title": "Write Configuration",
