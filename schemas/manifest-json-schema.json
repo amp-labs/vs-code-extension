@@ -387,6 +387,9 @@
               }
             },
             "description": "Configuration for reading data from the provider.",
+            "required": [
+              "objects"
+            ],
             "examples": [
               [
                 {

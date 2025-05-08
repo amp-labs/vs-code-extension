@@ -53,6 +53,9 @@
                     "read": {
                         "title": "Read Configuration",
                         "description": "Configuration for reading data from the provider.",
+                        "required": [
+                            "objects"
+                        ],
                         "properties": {
                             "objects": {
                                 "title": "Read Objects",
