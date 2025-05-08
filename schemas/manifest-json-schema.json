@@ -136,6 +136,50 @@
                         "title": "Required Field",
                         "oneOf": [
                           {
+                            "title": "Integration Field Existent",
+                            "type": "object",
+                            "required": [
+                              "fieldName"
+                            ],
+                            "properties": {
+                              "fieldName": {
+                                "type": "string"
+                              },
+                              "mapToName": {
+                                "type": "string",
+                                "description": "The field name to map to."
+                              },
+                              "mapToDisplayName": {
+                                "type": "string",
+                                "description": "The display name to map to."
+                              }
+                            }
+                          },
+                          {
+                            "title": "Integration Field Mapping",
+                            "type": "object",
+                            "required": [
+                              "mapToName"
+                            ],
+                            "properties": {
+                              "mapToName": {
+                                "type": "string"
+                              },
+                              "mapToDisplayName": {
+                                "type": "string"
+                              },
+                              "default": {
+                                "type": "string"
+                              },
+                              "prompt": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        ],
+                        "description": "Configuration for a required field.",
+                        "anyOf": [
+                          {
                             "properties": {
                               "fieldName": {
                                 "title": "Field Name",
@@ -183,8 +227,7 @@
                               }
                             }
                           }
-                        ],
-                        "description": "Configuration for a required field."
+                        ]
                       },
                       "title": "Required Fields",
                       "description": "Fields that are required for synchronization. These fields will always be included in the data.",
@@ -213,6 +256,50 @@
                         "title": "Optional Field",
                         "oneOf": [
                           {
+                            "title": "Integration Field Existent",
+                            "type": "object",
+                            "required": [
+                              "fieldName"
+                            ],
+                            "properties": {
+                              "fieldName": {
+                                "type": "string"
+                              },
+                              "mapToName": {
+                                "type": "string",
+                                "description": "The field name to map to."
+                              },
+                              "mapToDisplayName": {
+                                "type": "string",
+                                "description": "The display name to map to."
+                              }
+                            }
+                          },
+                          {
+                            "title": "Integration Field Mapping",
+                            "type": "object",
+                            "required": [
+                              "mapToName"
+                            ],
+                            "properties": {
+                              "mapToName": {
+                                "type": "string"
+                              },
+                              "mapToDisplayName": {
+                                "type": "string"
+                              },
+                              "default": {
+                                "type": "string"
+                              },
+                              "prompt": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        ],
+                        "description": "Configuration for an optional field.",
+                        "anyOf": [
+                          {
                             "properties": {
                               "fieldName": {
                                 "title": "Field Name",
@@ -260,8 +347,7 @@
                               }
                             }
                           }
-                        ],
-                        "description": "Configuration for an optional field."
+                        ]
                       },
                       "title": "Optional Fields",
                       "description": "Fields that are optional for synchronization. These fields will be included if available.",

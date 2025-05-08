@@ -181,7 +181,7 @@
                                             "items": {
                                                 "title": "Required Field",
                                                 "description": "Configuration for a required field.",
-                                                "oneOf": [
+                                                "anyOf": [
                                                     {
                                                         "properties": {
                                                             "fieldName": {
@@ -257,7 +257,7 @@
                                             "items": {
                                                 "title": "Optional Field",
                                                 "description": "Configuration for an optional field.",
-                                                "oneOf": [
+                                                "anyOf": [
                                                     {
                                                         "properties": {
                                                             "fieldName": {
