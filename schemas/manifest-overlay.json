@@ -597,7 +597,12 @@
                                                     "description": "The fields that are required to be watched for updates.",
                                                     "items": {
                                                         "description": "Field name to watch for changes."
-                                                    }
+                                                    },
+                                                    "examples": [
+                                                        [
+                                                            "Name"
+                                                        ]
+                                                    ]
                                                 }
                                             }
                                         },
@@ -615,7 +620,12 @@
                                                         "always"
                                                     ]
                                                 }
-                                            }
+                                            },
+                                            "examples": [
+                                                {
+                                                    "enabled": "always"
+                                                }
+                                            ]
                                         },
                                         "associationChangeEvent": {
                                             "title": "Association Change Event",
@@ -639,7 +649,13 @@
                                                         false
                                                     ]
                                                 }
-                                            }
+                                            },
+                                            "examples": [
+                                                {
+                                                    "enabled": "always",
+                                                    "includeFullRecords": true
+                                                }
+                                            ]
                                         },
                                         "otherEvents": {
                                             "title": "Other Events",
@@ -673,7 +689,8 @@
                                                 "enabled": "always"
                                             },
                                             "associationChangeEvent": {
-                                                "enabled": "always"
+                                                "enabled": "always",
+                                                "includeFullRecords": true
                                             },
                                             "otherEvents": [
                                                 "object.merged",
@@ -706,7 +723,8 @@
                                                 "enabled": "always"
                                             },
                                             "associationChangeEvent": {
-                                                "enabled": "always"
+                                                "enabled": "always",
+                                                "includeFullRecords": true
                                             },
                                             "otherEvents": [
                                                 "object.merged",

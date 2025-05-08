@@ -758,7 +758,12 @@
                             "description": "Field name to watch for changes."
                           },
                           "title": "Required Watch Fields",
-                          "description": "The fields that are required to be watched for updates."
+                          "description": "The fields that are required to be watched for updates.",
+                          "examples": [
+                            [
+                              "Name"
+                            ]
+                          ]
                         }
                       },
                       "title": "Update Event",
@@ -780,7 +785,12 @@
                         }
                       },
                       "title": "Delete Event",
-                      "description": "Configuration for delete events. Triggers when a record is removed."
+                      "description": "Configuration for delete events. Triggers when a record is removed.",
+                      "examples": [
+                        {
+                          "enabled": "always"
+                        }
+                      ]
                     },
                     "associationChangeEvent": {
                       "type": "object",
@@ -807,7 +817,13 @@
                         }
                       },
                       "title": "Association Change Event",
-                      "description": "Configuration for association change events. Triggers when relationships between records change."
+                      "description": "Configuration for association change events. Triggers when relationships between records change.",
+                      "examples": [
+                        {
+                          "enabled": "always",
+                          "includeFullRecords": true
+                        }
+                      ]
                     },
                     "otherEvents": {
                       "type": "array",
@@ -849,7 +865,8 @@
                         "enabled": "always"
                       },
                       "associationChangeEvent": {
-                        "enabled": "always"
+                        "enabled": "always",
+                        "includeFullRecords": true
                       },
                       "otherEvents": [
                         "object.merged",
@@ -883,7 +900,8 @@
                         "enabled": "always"
                       },
                       "associationChangeEvent": {
-                        "enabled": "always"
+                        "enabled": "always",
+                        "includeFullRecords": true
                       },
                       "otherEvents": [
                         "object.merged",
