@@ -402,6 +402,16 @@
                                             "objectName": "contact",
                                             "destination": "defaultWebhook",
                                             "schedule": "*/30 * * * *",
+                                            "backfill": {
+                                                "defaultPeriod": {
+                                                    "fullHistory": true,
+                                                    "days": 30
+                                                }
+                                            },
+                                            "delivery": {
+                                                "mode": "auto",
+                                                "pageSize": 100
+                                            },
                                             "requiredFields": [
                                                 {
                                                     "fieldName": "FirstName"
@@ -412,7 +422,15 @@
                                                 {
                                                     "fieldName": "Email"
                                                 }
-                                            ]
+                                            ],
+                                            "optionalFields": [
+                                                {
+                                                    "fieldName": "Phone"
+                                                }
+                                            ],
+                                            "optionalFieldsAuto": "all",
+                                            "mapToName": "customer",
+                                            "mapToDisplayName": "Customer"
                                         }
                                     ]
                                 }
@@ -459,12 +477,43 @@
                                                         false
                                                     ]
                                                 }
-                                            }
+                                            },
+                                            "examples": [
+                                                {
+                                                    "allowAnyFields": true
+                                                }
+                                            ]
                                         }
                                     }
-                                }
+                                },
+                                "examples": [
+                                    [
+                                        {
+                                            "objectName": "contact",
+                                            "inheritMapping": true,
+                                            "valueDefaults": {
+                                                "allowAnyFields": true
+                                            }
+                                        }
+                                    ]
+                                ]
                             }
-                        }
+                        },
+                        "examples": [
+                            [
+                                {
+                                    "objects": [
+                                        {
+                                            "objectName": "contact",
+                                            "inheritMapping": true,
+                                            "valueDefaults": {
+                                                "allowAnyFields": true
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        ]
                     },
                     "subscribe": {
                         "title": "Subscribe Configuration",

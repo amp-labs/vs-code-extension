@@ -525,6 +525,16 @@
                       "objectName": "contact",
                       "destination": "defaultWebhook",
                       "schedule": "*/30 * * * *",
+                      "backfill": {
+                        "defaultPeriod": {
+                          "fullHistory": true,
+                          "days": 30
+                        }
+                      },
+                      "delivery": {
+                        "mode": "auto",
+                        "pageSize": 100
+                      },
                       "requiredFields": [
                         {
                           "fieldName": "FirstName"
@@ -535,7 +545,15 @@
                         {
                           "fieldName": "Email"
                         }
-                      ]
+                      ],
+                      "optionalFields": [
+                        {
+                          "fieldName": "Phone"
+                        }
+                      ],
+                      "optionalFieldsAuto": "all",
+                      "mapToName": "customer",
+                      "mapToDisplayName": "Customer"
                     }
                   ]
                 }
@@ -588,16 +606,47 @@
                             false
                           ]
                         }
-                      }
+                      },
+                      "examples": [
+                        {
+                          "allowAnyFields": true
+                        }
+                      ]
                     }
                   },
                   "description": "Configuration for writing data to a specific object."
                 },
                 "title": "Write Objects",
-                "description": "List of objects that can be written to. Each object represents a data type that can be created or updated."
+                "description": "List of objects that can be written to. Each object represents a data type that can be created or updated.",
+                "examples": [
+                  [
+                    {
+                      "objectName": "contact",
+                      "inheritMapping": true,
+                      "valueDefaults": {
+                        "allowAnyFields": true
+                      }
+                    }
+                  ]
+                ]
               }
             },
-            "description": "Configuration for writing data to the provider."
+            "description": "Configuration for writing data to the provider.",
+            "examples": [
+              [
+                {
+                  "objects": [
+                    {
+                      "objectName": "contact",
+                      "inheritMapping": true,
+                      "valueDefaults": {
+                        "allowAnyFields": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            ]
           },
           "proxy": {
             "title": "Proxy Configuration",
