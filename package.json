@@ -41,12 +41,12 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "pnpm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
+    "pretest": "pnpm run compile && pnpm run lint && rm -f out/test/extension.test.js out/test/extension.test.js.map",
     "test": "node ./out/test/runTest.js",
+    "lint": "eslint --config eslint.config.cjs .",
     "package": "vsce package",
     "install-local": "vsce package && code --install-extension ampersand-schema-validator-*.vsix"
   },
