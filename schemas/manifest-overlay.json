@@ -749,7 +749,14 @@
                                     false
                                 ]
                             }
-                        }
+                        },
+                        "examples": [
+                            [
+                                {
+                                    "enabled": true
+                                }
+                            ]
+                        ]
                     }
                 }
             },

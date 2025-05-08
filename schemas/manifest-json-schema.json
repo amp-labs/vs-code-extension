@@ -663,7 +663,14 @@
                 ]
               }
             },
-            "description": "Configuration for proxying API calls to the provider."
+            "description": "Configuration for proxying API calls to the provider.",
+            "examples": [
+              [
+                {
+                  "enabled": true
+                }
+              ]
+            ]
           },
           "subscribe": {
             "title": "Subscribe Configuration",
