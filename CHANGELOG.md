@@ -7,3 +7,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [Unreleased]
 
 - Initial release
+- Schema validation for amp.yaml files
+- Command to generate a sample manifest
+- Completion for amp.yaml files
+- Quick fixes for amp.yaml files
+- Hover information for amp.yaml files
