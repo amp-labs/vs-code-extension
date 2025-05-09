@@ -21,16 +21,7 @@
           "amp.yaml",
           "*.amp.yaml"
         ],
-        "url": "https://raw.githubusercontent.com/caiopizzol/vs-code-extension/refs/heads/main/schemas/manifest-json-schema.json"
-      }
-    ],
-    "jsonValidation": [
-      {
-        "fileMatch": [
-          "amp.json",
-          "*.amp.json"
-        ],
-        "url": "https://raw.githubusercontent.com/caiopizzol/vs-code-extension/refs/heads/main/schemas/manifest-json-schema.json"
+        "url": "https://raw.githubusercontent.com/amp-labs/vs-code-extension/refs/heads/main/schemas/manifest-json-schema.json"
       }
     ],
     "commands": [
