@@ -1,0 +1,8 @@
+out
+dist
+node_modules
+.vscode-test/
+*.vsix
+schemas/manifest.yaml
+schemas/manifest.json
+.DS_Store
