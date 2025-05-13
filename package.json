@@ -2,7 +2,11 @@
   "name": "ampersand-schema-validator",
   "displayName": "Ampersand Schema Validator",
   "description": "Validation, completion and quick fixes for Ampersand manifest files (amp.yaml)",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amp-labs/vs-code-extension.git"
+  },
   "engines": {
     "vscode": "^1.60.0"
   },
@@ -39,7 +43,8 @@
     "test": "node ./out/test/runTest.js",
     "lint": "eslint --config eslint.config.cjs .",
     "package": "vsce package",
-    "install-local": "vsce package && code --install-extension ampersand-schema-validator-*.vsix"
+    "install-local:cursor": "vsce package && cursor --install-extension ampersand-schema-validator-*.vsix",
+    "install-local:vscode": "vsce package && code --install-extension ampersand-schema-validator-*.vsix"
   },
   "dependencies": {
     "axios": "^1.9.0",
