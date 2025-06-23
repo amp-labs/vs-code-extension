@@ -1,4 +1,5 @@
 # Ampersand Manifest Schema
+
 A Visual Studio Code extension that provides real-time validation, auto-completion, and quick fixes for Ampersand manifest files (`amp.yaml`).
 
 ## Features
@@ -25,7 +26,6 @@ The extension automatically validates all `amp.yaml` files in your workspace. Va
 ### Auto-completion
 
 As you type in an `amp.yaml` file, the extension provides context-aware suggestions. Press `Ctrl+Space` (or `Cmd+Space` on macOS) to trigger suggestions manually.
-
 
 ## Hover Documentation
 
@@ -55,8 +55,8 @@ To create a new Ampersand manifest based on a template:
 
 This extension contributes the following settings:
 
-* `ampersand.validateOnSave`: Enable/disable validation when saving files (default: `true`)
-* `ampersand.schemaUrl`: URL to the Ampersand manifest schema (default: the embedded schema)
+- `ampersand.validateOnSave`: Enable/disable validation when saving files (default: `true`)
+- `ampersand.schemaUrl`: URL to the Ampersand manifest schema (default: the embedded schema)
 
 ## Known Issues
 
