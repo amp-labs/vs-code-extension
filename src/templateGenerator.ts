@@ -91,6 +91,11 @@ export async function generateTemplateForProvider(
   // Get the template for the selected provider
   const template = providerTemplates[selectedProvider];
 
+  if (!template) {
+    vscode.window.showErrorMessage(`No template found for provider: ${selectedProvider}`);
+    return;
+  }
+
   // Ask the user to select which objects to include
   const readObjects = Object.keys(template.objects.read);
   const selectedReadObjects = await vscode.window.showQuickPick(readObjects, {
@@ -121,9 +126,12 @@ integrations:
 `;
 
     // Add required fields
-    for (const field of template.objects.read[objName]) {
-      yamlContent += `            - fieldName: ${field}
+    const fields = template.objects.read[objName];
+    if (fields) {
+      for (const field of fields) {
+        yamlContent += `            - fieldName: ${field}
 `;
+      }
     }
 
     // Add optional fields auto
@@ -215,9 +223,12 @@ integrations:
 `;
 
     // Add required fields
-    for (const field of template.objects.read[objName]) {
-      yamlContent += `            - fieldName: ${field}
+    const fields = template.objects.read[objName];
+    if (fields) {
+      for (const field of fields) {
+        yamlContent += `            - fieldName: ${field}
 `;
+      }
     }
 
     // Add optional fields auto

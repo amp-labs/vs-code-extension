@@ -59,7 +59,7 @@ function setupTelemetry(_context: vscode.ExtensionContext) {
 class AmpersandCodeActionProvider implements vscode.CodeActionProvider {
   public provideCodeActions(
     document: vscode.TextDocument,
-    range: vscode.Range | vscode.Selection,
+    _range: vscode.Range | vscode.Selection,
     context: vscode.CodeActionContext,
     _token: vscode.CancellationToken
   ): vscode.ProviderResult<vscode.CodeAction[]> {
