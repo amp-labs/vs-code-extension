@@ -2,7 +2,7 @@
   "name": "ampersand-schema-validator",
   "displayName": "Ampersand Schema Validator",
   "description": "Validation, completion and quick fixes for Ampersand manifest files (amp.yaml)",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/amp-labs/vs-code-extension.git"
@@ -25,7 +25,7 @@
           "amp.yaml",
           "*.amp.yaml"
         ],
-        "url": "https://raw.githubusercontent.com/amp-labs/vs-code-extension/refs/heads/main/schemas/manifest-json-schema.json"
+        "url": "https://raw.githubusercontent.com/amp-labs/vs-code-extension/refs/heads/main/schemas/manifest-vscode-schema.json"
       }
     ],
     "commands": [
@@ -39,31 +39,37 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint && rm -f out/test/extension.test.js out/test/extension.test.js.map",
+    "pretest": "npm run compile && npm run check && rm -f out/test/extension.test.js out/test/extension.test.js.map",
     "test": "node ./out/test/runTest.js",
-    "lint": "eslint --config eslint.config.cjs .",
     "package": "vsce package",
     "install-local:cursor": "vsce package && cursor --install-extension ampersand-schema-validator-*.vsix",
-    "install-local:vscode": "vsce package && code --install-extension ampersand-schema-validator-*.vsix"
+    "install-local:vscode": "vsce package && code --install-extension ampersand-schema-validator-*.vsix",
+    "lint": "eslint . --fix",
+    "lint:check": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run lint && npm run format",
+    "check:ci": "npm run lint:check && npm run format:check",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,ts,mjs,cjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": "prettier --write"
   },
   "dependencies": {
     "axios": "^1.9.0",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
-    "@types/glob": "^7.2.0",
-    "@types/js-yaml": "^4.0.5",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "~22.15.16",
-    "@types/vscode": "^1.60.0",
     "@typescript-eslint/eslint-plugin": "^8.32.0",
     "@typescript-eslint/parser": "^8.32.0",
-    "@vscode/test-electron": "^2.5.2",
     "eslint": "^9.26.0",
-    "glob": "^8.1.0",
-    "minimatch": "^3.1.2",
-    "mocha": "^11.2.2",
-    "typescript": "^5.8.3"
+    "prettier": "^3.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.0.0"
   },
   "resolutions": {
     "minimatch": "^5.1.6",

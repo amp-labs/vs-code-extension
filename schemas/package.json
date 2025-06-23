@@ -1,13 +1,13 @@
 {
-    "name": "ampersand-schemas",
-    "version": "1.0.0",
-    "description": "Schema generation for Ampersand VS Code extension",
-    "type": "module",
-    "main": "build-schema.js",
-    "scripts": {
-        "build": "node build-schema.js"
-    },
-    "dependencies": {
-        "@openapi-contrib/openapi-schema-to-json-schema": "^5.1.0"
-    }
+  "name": "ampersand-schemas",
+  "version": "0.1.0",
+  "description": "Schema generation for Ampersand VS Code extension",
+  "type": "module",
+  "main": "generate-schema.js",
+  "scripts": {
+    "generate": "node generate-schema.js"
+  },
+  "dependencies": {
+    "@openapi-contrib/openapi-schema-to-json-schema": "^5.1.0"
+  }
 }
