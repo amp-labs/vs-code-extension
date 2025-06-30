@@ -1,4 +1,4 @@
-name: Publish Extension
+name: 📦 Publish VS Code Extension
 
 on:
   release:

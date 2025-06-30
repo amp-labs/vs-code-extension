@@ -1,4 +1,4 @@
-name: Generate JSON Schema
+name: 📄 Generate JSON Schema
 
 on:
   workflow_dispatch:
