@@ -2,7 +2,7 @@
   "name": "ampersand-schema-validator",
   "displayName": "Ampersand Schema Validator",
   "description": "Validation, completion and quick fixes for Ampersand manifest files (amp.yaml)",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "publisher": "amp-labs",
   "icon": "icon.png",
   "license": "MIT",
