@@ -5,13 +5,13 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  
+
   // Linting
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": ["javascript", "typescript"],
-  
+
   // VS Code Extension Development
   "files.exclude": {
     "out": false // set to true to hide compiled JS files
@@ -21,7 +21,7 @@
     "**/node_modules": true,
     "**/*.vsix": true
   },
-  
+
   // TypeScript
   "typescript.tsc.autoDetect": "off",
   "typescript.tsdk": "node_modules/typescript/lib"

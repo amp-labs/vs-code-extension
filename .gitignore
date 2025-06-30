@@ -1,8 +1,32 @@
-out
-dist
-node_modules
-.vscode-test/
+# Build outputs
+out/
+dist/
+build/
 *.vsix
+
+# Dependencies
+node_modules/
+
+# Test artifacts
+.vscode-test/
+coverage/
+*.log
+
+# Generated files
 schemas/manifest.yaml
 schemas/manifest.json
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Editor directories
+.idea/
+*.swp
+*.swo
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/*.example.json
+*.code-workspace
