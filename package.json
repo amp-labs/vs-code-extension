@@ -1,8 +1,8 @@
 {
   "name": "ampersand-schema-validator",
   "displayName": "Ampersand Schema Validator",
-  "description": "Validate, autocomplete, and generate Ampersand manifest (amp.yaml) files with ease",
-  "version": "0.1.1",
+  "description": "Validation, completion and quick fixes for Ampersand manifest files (amp.yaml)",
+  "version": "0.0.2",
   "publisher": "amp-labs",
   "icon": "icon.png",
   "engines": {

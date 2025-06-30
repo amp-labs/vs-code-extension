@@ -1,3 +1,9 @@
+## [0.0.2](https://github.com/amp-labs/vs-code-extension/compare/v0.0.1...v0.0.2) (2025-06-30)
+
+### Bug Fixes
+
+- improve error handling and code clarity in template generation ([e2ba4f9](https://github.com/amp-labs/vs-code-extension/commit/e2ba4f9c29ed440ea1e1f3d0b10fd1ff94fb27bb))
+
 # 1.0.0 (2025-06-30)
 
 ### Bug Fixes
