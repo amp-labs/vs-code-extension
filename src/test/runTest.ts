@@ -14,7 +14,15 @@ async function main() {
     // Download VS Code, unzip it and run the integration test
     await runTests({
       extensionDevelopmentPath,
-      extensionTestsPath
+      extensionTestsPath,
+      // Add headless configuration for CI environments
+      launchArgs: [
+        '--no-sandbox',
+        '--disable-gpu',
+        '--disable-dev-shm-usage',
+        // Only add headless if we're in a CI environment without display
+        ...(process.env.CI && !process.env.DISPLAY ? ['--headless'] : [])
+      ]
     });
   } catch (err) {
     console.error('Failed to run tests', err);

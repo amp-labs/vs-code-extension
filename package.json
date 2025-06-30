@@ -85,7 +85,15 @@
     "vscode:prepublish": "npm run build",
     "install-local:vscode": "npm run package && code --install-extension ampersand-schema-validator-*.vsix",
     "install-local:cursor": "npm run package && cursor --install-extension ampersand-schema-validator-*.vsix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "commit": "cz",
+    "semantic-release": "semantic-release",
+    "release:dry": "semantic-release --dry-run"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "lint-staged": {
     "*.{js,ts,mjs,cjs}": [
@@ -99,6 +107,12 @@
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.3",
     "@types/glob": "^8.1.0",
     "@types/js-yaml": "^4.0.9",
     "@types/mocha": "^10.0.10",
@@ -107,11 +121,15 @@
     "@typescript-eslint/eslint-plugin": "^8.32.0",
     "@typescript-eslint/parser": "^8.32.0",
     "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.2.1",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.26.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.0.0",
     "mocha": "^10.8.2",
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.0",
+    "semantic-release": "^24.2.6"
   },
   "resolutions": {
     "minimatch": "^5.1.6",

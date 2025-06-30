@@ -11,3 +11,10 @@ vsc-extension-quickstart.md
 **/.vscode-test.*
 schemas/**
 .github/**
+.env
+.env.*
+.husky/**
+.releaserc.json
+.commitlintrc.json
+scripts/**
+node_modules/**
