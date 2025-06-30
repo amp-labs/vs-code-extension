@@ -4,9 +4,12 @@
   "description": "Schema generation scripts for Ampersand VS Code extension",
   "type": "module",
   "scripts": {
-    "generate": "node generate-schema.js"
+    "generate": "node generate-schema.js && npx prettier --write manifest-vscode.json"
   },
   "dependencies": {
     "@openapi-contrib/openapi-schema-to-json-schema": "^5.1.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0"
   }
 }
