@@ -63,11 +63,9 @@ This extension contributes the following settings:
 - The extension currently doesn't validate provider-specific field names.
 - Quick fixes are only available for a limited set of common issues.
 
-## Release Notes
+## Version History
 
-### 1.0.0
-
-Initial release of the Ampersand Schema Validator extension.
+Change log is available [here](CHANGELOG.md).
 
 ## Contributing
 
