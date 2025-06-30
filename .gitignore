@@ -20,6 +20,9 @@ schemas/manifest.json
 .DS_Store
 Thumbs.db
 
+# Environment variables
+.env
+
 # Editor directories
 .idea/
 *.swp
