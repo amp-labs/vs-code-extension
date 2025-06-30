@@ -1,6 +1,7 @@
 name: 🔬 Deploy Preview
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
 
@@ -30,7 +31,12 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm ci
-      - run: npm test
+      - name: Setup virtual display
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+      - name: Run tests with virtual display
+        run: xvfb-run -a npm test
 
   release:
     needs: test
