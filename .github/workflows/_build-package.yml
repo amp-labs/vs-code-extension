@@ -1,6 +1,12 @@
 name: Build VSIX package
 
 on:
+  workflow_dispatch:
+    inputs:
+      pre_release:
+        description: 'Build as pre-release'
+        type: boolean
+        default: false
   workflow_call:
     inputs:
       pre_release:

@@ -1,6 +1,7 @@
 name: Pre-commit checks
 
 on:
+  workflow_dispatch:
   workflow_call:
 
 jobs:

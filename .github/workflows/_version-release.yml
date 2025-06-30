@@ -1,6 +1,24 @@
 name: Version and Release
 
 on:
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version bump type'
+        type: string
+        required: true
+      commit_message:
+        description: 'Commit message template'
+        type: string
+        default: 'chore(release): %s'
+      tag_prefix:
+        description: 'Git tag prefix'
+        type: string
+        default: 'v'
+      push_changes:
+        description: 'Push changes to git'
+        type: boolean
+        default: true
   workflow_call:
     inputs:
       version_type:

@@ -1,6 +1,16 @@
 name: Run tests
 
 on:
+  workflow_dispatch:
+    inputs:
+      node_versions:
+        description: 'Node versions to test'
+        type: string
+        default: '["18", "20"]'
+      os_matrix:
+        description: 'Operating systems to test'
+        type: string
+        default: '["ubuntu-latest", "windows-latest", "macos-latest"]'
   workflow_call:
     inputs:
       node_versions:

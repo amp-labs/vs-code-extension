@@ -1,6 +1,16 @@
 name: Publish extension
 
 on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        type: string
+        required: true
+      pre_release:
+        description: 'Publish as pre-release'
+        type: boolean
+        default: false
   workflow_call:
     inputs:
       environment:
