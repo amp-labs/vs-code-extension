@@ -5,22 +5,48 @@
   "version": "0.0.2",
   "publisher": "amp-labs",
   "icon": "icon.png",
-  "license": "MIT",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Linters",
+    "Programming Languages",
+    "Snippets"
+  ],
+  "keywords": [
+    "ampersand",
+    "yaml",
+    "schema",
+    "validation",
+    "manifest",
+    "amp.yaml",
+    "integration"
+  ],
+  "galleryBanner": {
+    "color": "#1b2234",
+    "theme": "dark"
+  },
+  "badges": [
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/v/amplabs.ampersand-schema-validator",
+      "href": "https://marketplace.visualstudio.com/items?itemName=amplabs.ampersand-schema-validator",
+      "description": "VS Code Marketplace"
+    },
+    {
+      "url": "https://img.shields.io/github/stars/amp-labs/vs-code-extension",
+      "href": "https://github.com/amp-labs/vs-code-extension",
+      "description": "GitHub stars"
+    }
+  ],
+  "homepage": "https://github.com/amp-labs/vs-code-extension#readme",
   "bugs": {
     "url": "https://github.com/amp-labs/vs-code-extension/issues"
   },
-  "homepage": "https://github.com/amp-labs/vs-code-extension#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/amp-labs/vs-code-extension.git"
   },
-  "engines": {
-    "vscode": "^1.101.0"
-  },
-  "categories": [
-    "Linters",
-    "Programming Languages"
-  ],
+  "license": "MIT",
   "activationEvents": [
     "onLanguage:yaml"
   ],
@@ -91,7 +117,7 @@
     "@types/js-yaml": "^4.0.9",
     "@types/mocha": "^10.0.10",
     "@types/node": "^24.0.3",
-    "@types/vscode": "^1.101.0",
+    "@types/vscode": "^1.60.0",
     "@typescript-eslint/eslint-plugin": "^8.32.0",
     "@typescript-eslint/parser": "^8.32.0",
     "@vscode/test-electron": "^2.5.2",
