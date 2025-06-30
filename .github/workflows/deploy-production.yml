@@ -1,0 +1,78 @@
+name: 🚀 Deploy Production [manual]
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version bump type'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+      dry_run:
+        description: 'Dry run (no actual release)'
+        type: boolean
+        default: false
+
+concurrency:
+  group: production-${{ github.ref }}
+  cancel-in-progress: false # Never cancel production deployments
+
+jobs:
+  pre-commit:
+    uses: amp-labs/vs-code-extension/.github/workflows/_pre-commit.yml
+
+  tests:
+    needs: pre-commit
+    uses: amp-labs/vs-code-extension/.github/workflows/_run-tests.yml
+    with:
+      node_versions: '["18", "20"]'
+      os_matrix: '["ubuntu-latest", "windows-latest", "macos-latest"]'
+
+  release:
+    needs: tests
+    permissions:
+      contents: write
+    uses: amp-labs/vs-code-extension/.github/workflows/_version-release.yml
+    with:
+      version_type: ${{ inputs.version }}
+      push_changes: ${{ !inputs.dry_run }}
+
+  build:
+    needs: release
+    uses: amp-labs/vs-code-extension/.github/workflows/_build-package.yml
+
+  publish:
+    needs: [release, build]
+    if: ${{ !inputs.dry_run }}
+    uses: amp-labs/vs-code-extension/.github/workflows/_publish-extension.yml
+    with:
+      environment: production
+      pre_release: false
+    secrets:
+      VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
+
+  create-release:
+    needs: [release, build, publish]
+    if: ${{ !inputs.dry_run }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download VSIX
+        uses: actions/download-artifact@v4
+        with:
+          name: vscode-extension
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create ${{ needs.release.outputs.tag }} \
+            --title "Release ${{ needs.release.outputs.version }}" \
+            --notes "${{ needs.release.outputs.changelog }}" \
+            *.vsix

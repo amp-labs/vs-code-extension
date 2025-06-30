@@ -1,0 +1,49 @@
+name: 🔬 Deploy Preview Version [manual]
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_tests:
+        description: 'Skip tests (not recommended)'
+        type: boolean
+        default: false
+
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pre-commit:
+    if: ${{ !inputs.skip_tests }}
+    uses: amp-labs/vs-code-extension/.github/workflows/_pre-commit.yml
+
+  tests:
+    needs: pre-commit
+    if: ${{ !inputs.skip_tests }}
+    uses: amp-labs/vs-code-extension/.github/workflows/_run-tests.yml
+
+  build:
+    needs: [tests]
+    if: ${{ always() && (inputs.skip_tests || needs.tests.result == 'success') }}
+    uses: amp-labs/vs-code-extension/.github/workflows/_build-package.yml
+    with:
+      pre_release: true
+
+  publish:
+    needs: build
+    uses: amp-labs/vs-code-extension/.github/workflows/_publish-extension.yml
+    with:
+      environment: preview
+      pre_release: true
+    secrets:
+      VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
+
+  notify:
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post summary
+        run: |
+          echo "## 🔬 Preview Release Published!" >> $GITHUB_STEP_SUMMARY
+          echo "Version: ${{ needs.build.outputs.version }}-preview" >> $GITHUB_STEP_SUMMARY
+          echo "Install: \`code --install-extension amplabs.ampersand-schema-validator@pre-release\`" >> $GITHUB_STEP_SUMMARY

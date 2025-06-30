@@ -20,6 +20,15 @@ schemas/manifest.json
 .DS_Store
 Thumbs.db
 
+# Environment variables
+.env
+
+# Semantic release
+.semantic-release/
+
+# Husky
+.husky/_/
+
 # Editor directories
 .idea/
 *.swp
