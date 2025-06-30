@@ -32,7 +32,7 @@
           "amp.yaml",
           "*.amp.yaml"
         ],
-        "url": "https://raw.githubusercontent.com/amp-labs/vs-code-extension/refs/heads/main/schemas/manifest-vscode-schema.json"
+        "url": "https://raw.githubusercontent.com/amp-labs/vs-code-extension/refs/heads/main/schemas/manifest-vscode.json"
       }
     ],
     "commands": [

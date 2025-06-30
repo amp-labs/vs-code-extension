@@ -45,24 +45,39 @@ function deepMerge(base, overlay) {
   return overlay;
 }
 
+// Define file paths (script runs from schemas directory)
+const manifestPath = 'manifest.json';
+const overlayPath = 'manifest-overlay.json';
+const outputPath = 'manifest-vscode.json';
+
 // 1. Read the already‑dereferenced spec
-const doc = JSON.parse(fs.readFileSync('manifest.json', 'utf8'));
+if (!fs.existsSync(manifestPath)) {
+  console.error(`❌  Input file not found: ${manifestPath}`);
+  console.error('💡  Make sure manifest.json exists in the schemas/ directory');
+  console.error(
+    '🔗  You can fetch it from: https://raw.githubusercontent.com/amp-labs/openapi/refs/heads/main/manifest/generated/manifest.json'
+  );
+  process.exit(1);
+}
+
+const doc = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 
 // 2. Grab and convert the root schema
 const manifest = doc.components.schemas.Manifest;
 let schema = openapiSchemaToJsonSchema(manifest, { cloneSchema: true });
 
 // 3. Apply overlay file with extra descriptions / enum / business rules
-const overlayPath = 'manifest-overlay.json';
 if (fs.existsSync(overlayPath)) {
   const overlay = JSON.parse(fs.readFileSync(overlayPath, 'utf8'));
   schema = deepMerge(schema, overlay);
   console.log(`🔧  Applied overlay from ${overlayPath}`);
+} else {
+  console.warn(`⚠️   Overlay file ${overlayPath} not found, skipping overlay`);
 }
 
 // 4. Strip vendor extensions everywhere
 stripVendorExtensions(schema);
 
 // 5. Write final artefact
-fs.writeFileSync('manifest-vscode-schema.json', JSON.stringify(schema, null, 2));
-console.log('✅  Wrote manifest-vscode-schema.json');
+fs.writeFileSync(outputPath, JSON.stringify(schema, null, 2));
+console.log(`✅  Generated ${outputPath} successfully`);

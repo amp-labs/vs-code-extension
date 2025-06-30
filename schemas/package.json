@@ -1,9 +1,8 @@
 {
-  "name": "ampersand-schemas",
-  "version": "0.1.0",
-  "description": "Schema generation for Ampersand VS Code extension",
+  "name": "ampersand-schema-generation",
+  "version": "1.0.0",
+  "description": "Schema generation scripts for Ampersand VS Code extension",
   "type": "module",
-  "main": "generate-schema.js",
   "scripts": {
     "generate": "node generate-schema.js"
   },
