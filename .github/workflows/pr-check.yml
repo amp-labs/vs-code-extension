@@ -1,0 +1,29 @@
+name: 🔍 PR Check [auto]
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
+      - '.vscode/**'
+      - 'images/**'
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  pre-commit:
+    uses: amp-labs/vs-code-extension/.github/workflows/_pre-commit.yml
+
+  tests:
+    needs: pre-commit
+    uses: amp-labs/vs-code-extension/.github/workflows/_run-tests.yml
+    with:
+      node_versions: '["20"]' # Only test Node 20 on PRs
+      os_matrix: '["ubuntu-latest"]' # Only test Ubuntu on PRs
+
+  build:
+    needs: tests
+    uses: amp-labs/vs-code-extension/.github/workflows/_build-package.yml

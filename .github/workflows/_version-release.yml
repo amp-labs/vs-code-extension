@@ -1,0 +1,118 @@
+name: Version and Release
+
+on:
+  workflow_call:
+    inputs:
+      version_type:
+        description: 'Version bump type'
+        type: string
+        required: true
+      commit_message:
+        description: 'Commit message template'
+        type: string
+        default: 'chore(release): %s'
+      tag_prefix:
+        description: 'Git tag prefix'
+        type: string
+        default: 'v'
+      push_changes:
+        description: 'Push changes to git'
+        type: boolean
+        default: true
+    outputs:
+      version:
+        description: 'New version number'
+        value: ${{ jobs.release.outputs.version }}
+      tag:
+        description: 'Git tag created'
+        value: ${{ jobs.release.outputs.tag }}
+      changelog:
+        description: 'Generated changelog'
+        value: ${{ jobs.release.outputs.changelog }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
+      changelog: ${{ steps.changelog.outputs.changelog }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Get commits since last tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$LAST_TAG" ]; then
+            COMMITS=$(git log --pretty=format:"- %s (%h)" --reverse)
+          else
+            COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"- %s (%h)")
+          fi
+
+          # Save to output
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$COMMITS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Bump version
+        id: version
+        run: |
+          # Bump version
+          npm version ${{ inputs.version_type }} -m "${{ inputs.commit_message }}" --no-git-tag-version
+
+          # Get new version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          TAG="${{ inputs.tag_prefix }}${NEW_VERSION}"
+
+          echo "version=${NEW_VERSION}" >> $GITHUB_OUTPUT
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+
+      - name: Update CHANGELOG.md
+        run: |
+          # Create changelog entry
+          cat > changelog_entry.md << EOF
+          ## [${{ steps.version.outputs.version }}] - $(date +%Y-%m-%d)
+
+          ${{ steps.changelog.outputs.changelog }}
+
+          EOF
+
+          # Prepend to CHANGELOG.md
+          if [ -f CHANGELOG.md ]; then
+            cat CHANGELOG.md >> changelog_entry.md
+            mv changelog_entry.md CHANGELOG.md
+          else
+            mv changelog_entry.md CHANGELOG.md
+          fi
+
+          git add CHANGELOG.md
+
+      - name: Commit and tag
+        run: |
+          git add package.json package-lock.json CHANGELOG.md
+          git commit -m "${{ inputs.commit_message }}" -m "Version: ${{ steps.version.outputs.version }}"
+          git tag -a ${{ steps.version.outputs.tag }} -m "Release ${{ steps.version.outputs.version }}"
+
+      - name: Push changes
+        if: ${{ inputs.push_changes }}
+        run: |
+          git push origin HEAD:${{ github.ref_name }}
+          git push origin ${{ steps.version.outputs.tag }}
