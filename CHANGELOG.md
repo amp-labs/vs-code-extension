@@ -1,3 +1,9 @@
+## [0.0.3](https://github.com/amp-labs/vs-code-extension/compare/v0.0.2...v0.0.3) (2025-06-30)
+
+### Bug Fixes
+
+- update vscode and @types/vscode versions in package.json ([114fb48](https://github.com/amp-labs/vs-code-extension/commit/114fb48d9e085d6c172cd57d64c177210574be04))
+
 ## [0.0.2](https://github.com/amp-labs/vs-code-extension/compare/v0.0.1...v0.0.2) (2025-06-30)
 
 ### Bug Fixes
