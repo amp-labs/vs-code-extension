@@ -50,6 +50,8 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm ci
+      - name: Install VSCE globally
+        run: npm install -g @vscode/vsce
 
       - name: Preview Release & Publish
         env:
