@@ -1,13 +1,7 @@
-name: 🔍 PR Check [auto]
+name: 🔍 PR Check
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
-    paths-ignore:
-      - '**.md'
-      - '.github/**'
-      - '.vscode/**'
-      - 'images/**'
 
 concurrency:
   group: pr-${{ github.event.pull_request.number }}
@@ -15,15 +9,25 @@ concurrency:
 
 jobs:
   pre-commit:
-    uses: amp-labs/vs-code-extension/.github/workflows/_pre-commit.yml
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run check:ci
 
-  tests:
+  test:
     needs: pre-commit
-    uses: amp-labs/vs-code-extension/.github/workflows/_run-tests.yml
-    with:
-      node_versions: '["20"]' # Only test Node 20 on PRs
-      os_matrix: '["ubuntu-latest"]' # Only test Ubuntu on PRs
-
-  build:
-    needs: tests
-    uses: amp-labs/vs-code-extension/.github/workflows/_build-package.yml
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test
+      - run: npm run package
