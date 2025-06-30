@@ -26,6 +26,12 @@
             "maxLength": 64,
             "examples": ["salesforce-contacts", "hubspot-integration", "github-issues-tracker"]
           },
+          "provider": {
+            "type": "string",
+            "title": "Provider",
+            "description": "The provider/platform for this integration. Must be one of the supported providers. This determines which API endpoints and authentication methods are used.",
+            "examples": ["salesforce", "hubspot", "github", "intercom", "stripe"]
+          },
           "displayName": {
             "type": "string",
             "title": "Display Name",
@@ -33,11 +39,8 @@
             "maxLength": 100,
             "examples": ["Salesforce Contacts", "HubSpot CRM Integration", "GitHub Issues Tracker"]
           },
-          "provider": {
-            "type": "string",
-            "title": "Provider",
-            "description": "The provider/platform for this integration. Must be one of the supported providers. This determines which API endpoints and authentication methods are used.",
-            "examples": ["salesforce", "hubspot", "github", "intercom", "stripe"]
+          "module": {
+            "type": "string"
           },
           "read": {
             "title": "Read Configuration",
@@ -539,6 +542,10 @@
                 "description": "Whether proxy is enabled for this integration. If true, API calls can be made directly to the provider through Ampersand's proxy.",
                 "default": false,
                 "examples": [true, false]
+              },
+              "useModule": {
+                "type": "boolean",
+                "description": "Default is false. If this is set to true, the base URL for the proxy action will be the module's base URL. Otherwise, it is assumed that the base URL is the provider's root base URL."
               }
             },
             "description": "Configuration for proxying API calls to the provider.",
