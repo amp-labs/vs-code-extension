@@ -49,7 +49,7 @@ function setupTelemetry(_context: vscode.ExtensionContext) {
 
   // In a real implementation, you would initialize a telemetry client here
   // For example, using Application Insights
-  console.log('Telemetry enabled for Ampersand Schema Validator');
+  // console.log('Telemetry enabled for Ampersand Schema Validator');
 
   // Track extension activation
   // telemetryClient.trackEvent('extension_activated');
