@@ -1,3 +1,9 @@
+## [0.0.4](https://github.com/amp-labs/vs-code-extension/compare/v0.0.3...v0.0.4) (2025-07-08)
+
+### Bug Fixes
+
+- comment out telemetry log in extension.ts for cleaner output ([9303eb1](https://github.com/amp-labs/vs-code-extension/commit/9303eb1bd54a6c1e675dfaef5e3bb81ff751cdc2))
+
 ## [0.0.3](https://github.com/amp-labs/vs-code-extension/compare/v0.0.2...v0.0.3) (2025-06-30)
 
 ### Bug Fixes
