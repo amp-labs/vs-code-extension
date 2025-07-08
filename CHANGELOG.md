@@ -1,3 +1,9 @@
+## [0.0.5](https://github.com/amp-labs/vs-code-extension/compare/v0.0.4...v0.0.5) (2025-07-08)
+
+### Bug Fixes
+
+- add TODO for additional quick fixes in CodeActionProvider ([2cd6f4b](https://github.com/amp-labs/vs-code-extension/commit/2cd6f4b072fd22cc19a7877366dc88239e780a6a))
+
 ## [0.0.4](https://github.com/amp-labs/vs-code-extension/compare/v0.0.3...v0.0.4) (2025-07-08)
 
 ### Bug Fixes
