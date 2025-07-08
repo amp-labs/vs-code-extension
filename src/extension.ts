@@ -66,6 +66,7 @@ class AmpersandCodeActionProvider implements vscode.CodeActionProvider {
     const actions: vscode.CodeAction[] = [];
 
     // Check for missing specVersion diagnostic
+    // TODO: Add more quick fixes
     for (const diagnostic of context.diagnostics) {
       if (diagnostic.message.includes('specVersion') && diagnostic.message.includes('required')) {
         const fixAction = new vscode.CodeAction(
