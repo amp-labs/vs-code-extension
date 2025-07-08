@@ -31,7 +31,8 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "vsce package --pre-release"
+        "prepareCmd": "vsce package --pre-release",
+        "publishCmd": "vsce publish --pre-release -p ${process.env.VSCE_TOKEN}"
       }
     ],
     [
